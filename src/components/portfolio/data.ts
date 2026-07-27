@@ -159,8 +159,8 @@ export const CERTIFICATIONS = [
 ];
 
 export const CONTACT = {
-  email: "nagarajucsd@gmail.com",
-  phone: "+91",
+  email: "dramarajudramaraju59@gmail.com",
+  phone: "+91 9160908677",
   linkedin: "https://www.linkedin.com/in/dandu-rama-siva-naga-raju/",
   github: "https://github.com/Nagaraju-209",
   resume: "/resume.pdf",

@@ -17,6 +17,9 @@ import {
   MapPin,
   Calendar,
   ChevronRight,
+  BookOpen,
+  Workflow as WorkflowIcon,
+  Send,
 } from "lucide-react";
 import heroImg from "@/assets/hero-devops.jpg";
 
@@ -35,14 +38,21 @@ function Linkedin({ className }: { className?: string }) {
     </svg>
   );
 }
+import { Activity } from "lucide-react";
+import type { Project } from "./data";
 import {
   NAV_LINKS,
   TYPING_WORDS,
   STATS,
+  ABOUT_HIGHLIGHTS,
   SKILL_GROUPS,
+  DEVOPS_FOCUS_FLOW,
+  DEVOPS_FOCUS_TOOLS,
   PROJECTS,
+  WORKFLOW_STEPS,
   EXPERIENCE,
   CERTIFICATIONS,
+  CURRENTLY_LEARNING,
   CONTACT,
 } from "./data";
 
@@ -281,37 +291,42 @@ function Hero() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1 text-xs font-medium uppercase tracking-widest text-cyan-300">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400" />
-            Available for opportunities
+            Open to full-time opportunities
           </span>
           <h1 className="mt-5 text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
             Dandu Rama Siva <br />
             <GradientText>Naga Raju</GradientText>
           </h1>
           <p className="mt-4 text-lg text-slate-300 sm:text-xl">
-            DevOps Engineer · Cloud Enthusiast · Java Backend Developer
+            DevOps Engineer <span className="text-slate-500">|</span> Cloud &amp; Automation
           </p>
           <p className="mt-3 flex h-8 items-center text-lg text-cyan-300 sm:text-xl">
             <span className="font-semibold">{typed}</span>
             <span className="ml-1 inline-block h-6 w-[2px] animate-pulse bg-cyan-300" />
           </p>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400">
-            Computer Science graduate with hands-on experience designing production-ready CI/CD
-            pipelines using Jenkins, Docker, Kubernetes and Spring Boot.
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-300">
+            Computer Science graduate with hands-on experience building CI/CD pipelines,
+            containerized applications, AWS infrastructure, Infrastructure as Code and DevSecOps
+            workflows.
+          </p>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-slate-400">
+            Computer Science graduate focused on DevOps, cloud infrastructure, automation, CI/CD and
+            reliable software delivery.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href={CONTACT.resume}
-              download
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/30 transition-transform hover:scale-[1.03]"
+              href="#projects"
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-7 py-3.5 text-base font-bold text-slate-950 shadow-xl shadow-cyan-500/40 transition-transform hover:scale-[1.04]"
             >
-              <Download className="h-4 w-4" /> Download Resume
+              <FolderGit2 className="h-5 w-5" aria-hidden="true" /> View Projects
             </a>
             <a
-              href="#projects"
+              href={CONTACT.resume}
+              download
               className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
             >
-              <FolderGit2 className="h-4 w-4" /> View Projects
+              <Download className="h-4 w-4" aria-hidden="true" /> Download Resume
             </a>
             <a
               href={CONTACT.github}
@@ -319,7 +334,7 @@ function Hero() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
             >
-              <Github className="h-4 w-4" /> GitHub
+              <Github className="h-4 w-4" aria-hidden="true" /> GitHub
             </a>
             <a
               href={CONTACT.linkedin}
@@ -327,7 +342,13 @@ function Hero() {
               rel="noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
             >
-              <Linkedin className="h-4 w-4" /> LinkedIn
+              <Linkedin className="h-4 w-4" aria-hidden="true" /> LinkedIn
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-5 py-3 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
+            >
+              <Send className="h-4 w-4" aria-hidden="true" /> Contact Me
             </a>
           </div>
 
@@ -379,19 +400,14 @@ function Hero() {
 /* ---------- About ---------- */
 
 function About() {
-  const items = [
-    "Computer Science graduate passionate about DevOps",
-    "Automation-first mindset",
-    "Cloud-native application design",
-    "Infrastructure as Code",
-    "Containerization & orchestration",
-    "CI/CD engineering",
-    "Continuous learner",
-  ];
+  const items = ABOUT_HIGHLIGHTS;
   return (
     <section id="about" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <SectionTitle eyebrow="About me" title="Engineer building reliable delivery pipelines" />
+        <SectionTitle
+          eyebrow="About Me"
+          title="Building reliable cloud infrastructure and delivery pipelines"
+        />
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -401,17 +417,17 @@ function About() {
             className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur"
           >
             <p className="text-base leading-relaxed text-slate-300">
-              I'm a Computer Science graduate and DevOps enthusiast focused on shipping cloud-native
-              applications with confidence. I love turning manual work into repeatable pipelines —
-              from Jenkins-driven builds and quality gates to container images that land safely on
-              Kubernetes.
+              I'm a Computer Science graduate focused on DevOps, cloud infrastructure, automation
+              and reliable software delivery. I enjoy turning application code into repeatable
+              delivery workflows using CI/CD, containers and Infrastructure as Code.
             </p>
             <p className="mt-4 text-base leading-relaxed text-slate-400">
-              My toolkit spans Docker, Kubernetes, AWS, Terraform and Spring Boot. I care about
-              observability, security scanning and infrastructure that reads like code — so teams
-              can deploy any time, without fear.
+              My hands-on projects cover AWS infrastructure, Terraform, Docker, Kubernetes, GitHub
+              Actions, Jenkins, DevSecOps, monitoring and Spring Boot applications. I focus on
+              building solutions that are repeatable, secure and easier to operate.
             </p>
           </motion.div>
+
           <motion.ul
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -443,8 +459,8 @@ function Skills() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionTitle
           eyebrow="Skills"
-          title="Tools that ship software"
-          subtitle="Languages, frameworks and platforms I use in production-style projects."
+          title="Tools I work with"
+          subtitle="Languages, cloud services, DevOps tooling and platforms used across my hands-on projects."
         />
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {SKILL_GROUPS.map((group, idx) => {
@@ -485,112 +501,319 @@ function Skills() {
   );
 }
 
+/* ---------- DevOps Focus ---------- */
+
+function DevOpsFocus() {
+  return (
+    <section id="focus" className="relative py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <SectionTitle
+          eyebrow="DevOps Focus"
+          title="From application code to cloud infrastructure"
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5 }}
+          className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur sm:p-8"
+        >
+          <ol className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
+            {DEVOPS_FOCUS_FLOW.map((step, i) => (
+              <li key={step} className="flex items-center gap-2">
+                <span className="rounded-full border border-cyan-400/25 bg-cyan-400/5 px-3 py-1.5 text-xs font-semibold text-cyan-200 sm:text-sm">
+                  {step}
+                </span>
+                {i < DEVOPS_FOCUS_FLOW.length - 1 ? (
+                  <ChevronRight className="h-4 w-4 shrink-0 text-cyan-300/50" aria-hidden="true" />
+                ) : null}
+              </li>
+            ))}
+          </ol>
+          <div className="mt-7 border-t border-white/10 pt-6">
+            <p className="mb-3 text-center text-xs font-semibold uppercase tracking-widest text-slate-500">
+              Tooling across the lifecycle
+            </p>
+            <ul className="flex flex-wrap justify-center gap-2">
+              {DEVOPS_FOCUS_TOOLS.map((t) => (
+                <li
+                  key={t}
+                  className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs text-slate-300"
+                >
+                  {t}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Architecture diagram (reusable) ---------- */
+
+function ArchitectureDiagram({ project }: { project: Project }) {
+  return (
+    <div className="space-y-5">
+      <div className="rounded-2xl border border-white/10 bg-[#05070d]/60 p-5">
+        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+          Delivery pipeline
+        </p>
+        <ol className="relative space-y-3 border-l border-cyan-400/20 pl-5">
+          {project.timeline.map((step, i) => (
+            <li key={step} className="relative">
+              <span className="absolute -left-[27px] top-1 grid h-4 w-4 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 ring-4 ring-[#05070d]">
+                <span className="h-1 w-1 rounded-full bg-slate-950" />
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-slate-500">{String(i + 1).padStart(2, "0")}</span>
+                <span className="text-sm font-semibold text-white">{step}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {project.infrastructure ? (
+        <div className="rounded-2xl border border-white/10 bg-[#05070d]/60 p-5">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
+            Infrastructure layer
+          </p>
+          <p className="text-sm font-semibold text-cyan-300">{project.infrastructure.root}</p>
+          <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {project.infrastructure.nodes.map((n) => (
+              <li
+                key={n}
+                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-slate-300"
+              >
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+                {n}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {project.observability ? (
+        <div className="rounded-2xl border border-cyan-400/20 bg-cyan-400/[0.04] p-5">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
+            Observability layer
+          </p>
+          <p className="flex items-start gap-2 text-sm text-slate-300">
+            <Activity className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" aria-hidden="true" />
+            {project.observability}
+          </p>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 /* ---------- Projects ---------- */
+
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const [open, setOpen] = useState(false);
+  const detailsId = `project-details-${index}`;
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
+      className={`group relative overflow-hidden rounded-3xl border backdrop-blur transition-colors sm:p-10 ${
+        project.flagship
+          ? "border-cyan-400/30 bg-gradient-to-br from-cyan-400/[0.08] to-blue-500/[0.04] p-6 shadow-2xl shadow-cyan-500/10"
+          : "border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-6 hover:border-cyan-400/30"
+      }`}
+    >
+      <span
+        className={`mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-widest ${
+          project.flagship
+            ? "border border-cyan-400/40 bg-cyan-400/15 text-cyan-200"
+            : "border border-white/10 bg-white/[0.05] text-slate-400"
+        }`}
+      >
+        {project.flagship ? <Rocket className="h-3 w-3" aria-hidden="true" /> : null}
+        {project.badge}
+      </span>
+
+      <div
+        className={`grid grid-cols-1 gap-8 ${project.timeline.length > 0 ? "lg:grid-cols-[1.15fr_1fr]" : ""}`}
+      >
+        <div className="min-w-0">
+          <h3
+            className={`font-bold text-white ${project.flagship ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"}`}
+          >
+            {project.title}
+          </h3>
+          <p className="mt-3 text-base leading-relaxed text-slate-400">{project.description}</p>
+
+          <div className="mt-5">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
+              Technologies
+            </p>
+            <ul className="flex flex-wrap gap-2">
+              {project.stack.map((s) => (
+                <li
+                  key={s}
+                  className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300"
+                >
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-5">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
+              Key features
+            </p>
+            <ul className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
+              {(open ? project.features : project.features.slice(0, 6)).map((f) => (
+                <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
+                  <ChevronRight
+                    className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300"
+                    aria-hidden="true"
+                  />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <AnimatePresence initial={false}>
+            {open && project.engineering && project.engineering.length > 0 ? (
+              <motion.div
+                key="eng"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="mt-6">
+                  <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                    Engineering highlights
+                  </p>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {project.engineering.map((h) => (
+                      <div
+                        key={h.title}
+                        className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+                      >
+                        <p className="text-sm font-semibold text-cyan-300">{h.title}</p>
+                        <p className="mt-1.5 text-xs leading-relaxed text-slate-400">{h.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-transform hover:scale-[1.03] ${
+                project.flagship
+                  ? "bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/25"
+                  : "border border-white/10 bg-white/5 text-white hover:border-cyan-400/40 hover:text-cyan-300"
+              }`}
+            >
+              <Github className="h-4 w-4" aria-hidden="true" /> View Repository
+            </a>
+            {project.liveDemo ? (
+              <a
+                href={project.liveDemo}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white hover:border-cyan-400/40 hover:text-cyan-300"
+              >
+                <ExternalLink className="h-4 w-4" aria-hidden="true" /> Live Demo
+              </a>
+            ) : null}
+            {project.timeline.length > 0 || project.engineering ? (
+              <button
+                type="button"
+                onClick={() => setOpen((v) => !v)}
+                aria-expanded={open}
+                aria-controls={detailsId}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-cyan-400/40 hover:text-cyan-300"
+              >
+                <WorkflowIcon className="h-4 w-4" aria-hidden="true" />
+                {open ? "Hide engineering details" : "View engineering details"}
+              </button>
+            ) : null}
+          </div>
+        </div>
+
+        {project.timeline.length > 0 ? (
+          <div id={detailsId}>
+            <ArchitectureDiagram project={project} />
+          </div>
+        ) : null}
+      </div>
+    </motion.article>
+  );
+}
 
 function Projects() {
   return (
     <section id="projects" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionTitle
-          eyebrow="Featured projects"
-          title="Production-grade builds"
-          subtitle="Selected work highlighting CI/CD, containers, cloud and infrastructure as code."
+          eyebrow="Projects"
+          title="Production-style DevOps builds"
+          subtitle="Hands-on work across CI/CD, containers, AWS cloud infrastructure and infrastructure as code."
         />
         <div className="space-y-8">
           {PROJECTS.map((p, idx) => (
-            <motion.article
-              key={p.title}
-              initial={{ opacity: 0, y: 40 }}
+            <ProjectCard key={p.title} project={p} index={idx} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Production DevOps Workflow ---------- */
+
+function Workflow() {
+  return (
+    <section id="workflow" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <SectionTitle
+          eyebrow="Delivery Workflow"
+          title="From commit to running service"
+          subtitle="The automated delivery flow behind my flagship AWS DevOps platform."
+        />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {WORKFLOW_STEPS.map((step, i) => (
+            <motion.div
+              key={step.label}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: idx * 0.05 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-6 backdrop-blur sm:p-10"
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.4, delay: i * 0.04 }}
+              whileHover={{ y: -4 }}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur transition-colors hover:border-cyan-400/40"
             >
-              {p.flagship ? (
-                <span className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-cyan-300">
-                  <Rocket className="h-3 w-3" /> Flagship
+              <div className="flex items-center gap-3">
+                <span className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-cyan-400/20 to-blue-500/20 text-xs font-bold text-cyan-300 ring-1 ring-inset ring-white/10">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-sm font-semibold text-white">{step.label}</h3>
+              </div>
+              <p className="mt-3 text-xs leading-relaxed text-slate-400">{step.detail}</p>
+              {i < WORKFLOW_STEPS.length - 1 ? (
+                <span className="absolute right-3 top-3 text-cyan-300/60">
+                  <ChevronRight className="h-4 w-4" />
                 </span>
               ) : null}
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_1fr]">
-                <div>
-                  <h3 className="text-2xl font-bold text-white sm:text-3xl">{p.title}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-slate-400">{p.description}</p>
-
-                  <div className="mt-5">
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-                      Stack
-                    </p>
-                    <ul className="flex flex-wrap gap-2">
-                      {p.stack.map((s) => (
-                        <li
-                          key={s}
-                          className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300"
-                        >
-                          {s}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-5">
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
-                      Highlights
-                    </p>
-                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                      {p.features.map((f) => (
-                        <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
-                          <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-6 flex flex-wrap gap-3">
-                    <a
-                      href={p.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/25 transition-transform hover:scale-[1.03]"
-                    >
-                      <Github className="h-4 w-4" /> GitHub
-                    </a>
-                    {p.flagship ? (
-                      <a
-                        href="#architecture"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white hover:border-cyan-400/40 hover:text-cyan-300"
-                      >
-                        <ExternalLink className="h-4 w-4" /> Architecture
-                      </a>
-                    ) : null}
-                  </div>
-                </div>
-
-                {p.timeline.length > 0 ? (
-                  <div
-                    id="architecture"
-                    className="rounded-2xl border border-white/10 bg-[#05070d]/60 p-5"
-                  >
-                    <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
-                      Pipeline architecture
-                    </p>
-                    <ol className="relative space-y-3 border-l border-cyan-400/20 pl-5">
-                      {p.timeline.map((step, i) => (
-                        <li key={step} className="relative">
-                          <span className="absolute -left-[27px] top-1 grid h-4 w-4 place-items-center rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 ring-4 ring-[#05070d]">
-                            <span className="h-1 w-1 rounded-full bg-slate-950" />
-                          </span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-slate-500">0{i + 1}</span>
-                            <span className="text-sm font-semibold text-white">{step}</span>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                ) : null}
-              </div>
-            </motion.article>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -632,6 +855,15 @@ function Experience() {
                   <MapPin className="h-3.5 w-3.5" /> {e.location}
                 </span>
               </div>
+              <p className="mt-4 text-sm leading-relaxed text-slate-400">{e.summary}</p>
+              <ul className="mt-4 space-y-2">
+                {e.bullets.map((b) => (
+                  <li key={b} className="flex items-start gap-2 text-sm text-slate-300">
+                    <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-cyan-300" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
               <ul className="mt-5 flex flex-wrap gap-2">
                 {e.highlights.map((h) => (
                   <li
@@ -682,6 +914,49 @@ function Certifications() {
   );
 }
 
+/* ---------- Currently Learning ---------- */
+
+function CurrentlyLearning() {
+  return (
+    <section id="learning" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
+        <SectionTitle
+          eyebrow="Currently learning"
+          title="Sharpening my DevOps roadmap"
+          subtitle="Actively expanding my toolkit with the next wave of cloud-native tooling."
+        />
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur"
+        >
+          <div className="flex items-center gap-3">
+            <span className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/30">
+              <BookOpen className="h-6 w-6" />
+            </span>
+            <div>
+              <h3 className="text-lg font-bold text-white">Learning roadmap</h3>
+              <p className="text-sm text-cyan-300">Next up on my DevOps journey</p>
+            </div>
+          </div>
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {CURRENTLY_LEARNING.map((item) => (
+              <li
+                key={item}
+                className="rounded-full border border-cyan-400/20 bg-cyan-400/5 px-3 py-1.5 text-xs font-medium text-cyan-200"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Education ---------- */
 
 function Education() {
@@ -708,7 +983,7 @@ function Education() {
                 <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs text-slate-300">
                   CGPA 7.73
                 </span>
-                <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs text-slate-300">
+                <span className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200">
                   Graduated 2025
                 </span>
               </div>
@@ -729,8 +1004,8 @@ function Contact() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionTitle
           eyebrow="Contact"
-          title="Let's build something reliable"
-          subtitle="Have an opportunity or a pipeline problem to solve? Drop a message."
+          title="Let's build reliable systems"
+          subtitle="Open to Junior DevOps, Cloud and DevOps Engineer opportunities."
         />
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_1.2fr]">
           <div className="space-y-3">
@@ -845,8 +1120,9 @@ function Footer() {
   return (
     <footer className="relative border-t border-white/5 py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 sm:flex-row sm:px-8">
-        <p className="text-sm text-slate-500">
-          © {new Date().getFullYear()} Dandu Rama Siva Naga Raju. Built with React & Tailwind.
+        <p className="text-center text-sm text-slate-500 sm:text-left">
+          © {new Date().getFullYear()} Dandu Rama Siva Naga Raju. Built with React · TanStack Start
+          · TypeScript · Tailwind CSS · Hosted on Vercel.
         </p>
         <div className="flex items-center gap-2">
           <a
@@ -912,7 +1188,7 @@ export default function Portfolio() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 20 });
 
   return (
-    <div className="relative min-h-dvh scroll-smooth text-slate-100 antialiased">
+    <div className="relative min-h-dvh overflow-x-clip scroll-smooth text-slate-100 antialiased">
       <AnimatedBackground />
       <motion.div
         style={{ scaleX }}
@@ -923,9 +1199,12 @@ export default function Portfolio() {
         <Hero />
         <About />
         <Skills />
+        <DevOpsFocus />
         <Projects />
+        <Workflow />
         <Experience />
         <Certifications />
+        <CurrentlyLearning />
         <Education />
         <Contact />
       </main>

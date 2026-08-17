@@ -6,25 +6,31 @@ const Portfolio = lazy(() => import("@/components/portfolio/Portfolio"));
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Dandu Rama Siva Naga Raju — DevOps Engineer & Cloud Enthusiast" },
+      { title: "Dandu Rama Siva Naga Raju | DevOps Engineer | AWS | Cloud & Automation" },
       {
         name: "description",
         content:
-          "Portfolio of Dandu Rama Siva Naga Raju — DevOps Engineer specializing in Jenkins, Docker, Kubernetes, AWS and Spring Boot CI/CD pipelines.",
+          "DevOps Engineer fresher portfolio showcasing AWS cloud infrastructure, Terraform, CI/CD, Docker, Kubernetes, GitHub Actions, Jenkins and DevSecOps projects.",
       },
-      { property: "og:title", content: "Dandu Rama Siva Naga Raju — DevOps Engineer" },
+      {
+        property: "og:title",
+        content: "Dandu Rama Siva Naga Raju | DevOps Engineer | Cloud & Automation",
+      },
       {
         property: "og:description",
         content:
-          "DevOps Engineer building production-grade CI/CD pipelines with Jenkins, Docker, Kubernetes, AWS and Spring Boot.",
+          "Computer Science graduate with hands-on experience in AWS, Terraform, CI/CD, Docker, Kubernetes and DevSecOps.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Dandu Rama Siva Naga Raju — DevOps Engineer" },
+      {
+        name: "twitter:title",
+        content: "Dandu Rama Siva Naga Raju | DevOps Engineer | Cloud & Automation",
+      },
       {
         name: "twitter:description",
-        content: "DevOps · Cloud · Java Backend · CI/CD Automation",
+        content: "AWS · Terraform · CI/CD · Docker · Kubernetes · DevSecOps",
       },
     ],
     links: [{ rel: "canonical", href: "/" }],

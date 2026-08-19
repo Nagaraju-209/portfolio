@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
 import { motion, useScroll, useSpring, AnimatePresence } from "framer-motion";
+import { contactSchema, sendContactMessage } from "@/lib/contact.functions";
 import {
   Mail,
   Phone,
@@ -998,7 +1000,46 @@ function Education() {
 /* ---------- Contact ---------- */
 
 function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const send = useServerFn(sendContactMessage);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (status === "sending") return;
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const parsed = contactSchema.safeParse({
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+      company: String(data.get("company") ?? ""),
+    });
+
+    if (!parsed.success) {
+      setStatus("error");
+      setFeedback(parsed.error.issues[0]?.message ?? "Please check the form and try again.");
+      return;
+    }
+
+    setStatus("sending");
+    setFeedback("");
+    try {
+      const result = await send({ data: parsed.data });
+      if (result.ok) {
+        form.reset();
+        setStatus("success");
+        setFeedback("Message sent successfully! I'll get back to you soon.");
+      } else {
+        setStatus("error");
+        setFeedback(result.error);
+      }
+    } catch {
+      setStatus("error");
+      setFeedback("Something went wrong. Please check your connection and try again.");
+    }
+  }
+
   return (
     <section id="contact" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
@@ -1043,19 +1084,8 @@ function Contact() {
           </div>
 
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const form = e.currentTarget;
-              const data = new FormData(form);
-              const name = String(data.get("name") ?? "");
-              const email = String(data.get("email") ?? "");
-              const message = String(data.get("message") ?? "");
-              const body = encodeURIComponent(`Hi Raju,\n\n${message}\n\n— ${name} (${email})`);
-              window.location.href = `mailto:${CONTACT.email}?subject=${encodeURIComponent(
-                `Portfolio contact from ${name}`,
-              )}&body=${body}`;
-              setSubmitted(true);
-            }}
+            onSubmit={handleSubmit}
+            noValidate
             className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur sm:p-8"
           >
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -1098,15 +1128,33 @@ function Contact() {
                 placeholder="Tell me about the role or project..."
               />
             </label>
+            {/* Honeypot — hidden from real visitors */}
+            <div className="hidden" aria-hidden="true">
+              <label>
+                Company
+                <input name="company" tabIndex={-1} autoComplete="off" />
+              </label>
+            </div>
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={status === "sending" ? undefined : { scale: 1.02 }}
+              whileTap={status === "sending" ? undefined : { scale: 0.98 }}
               type="submit"
-              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/25"
+              disabled={status === "sending"}
+              aria-busy={status === "sending"}
+              className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/25 disabled:cursor-not-allowed disabled:opacity-70"
             >
               <Mail className="h-4 w-4" />
-              {submitted ? "Opening your email…" : "Send message"}
+              {status === "sending" ? "Sending..." : "Send message"}
             </motion.button>
+            {feedback ? (
+              <p
+                role="status"
+                aria-live="polite"
+                className={`mt-3 text-sm ${status === "success" ? "text-cyan-300" : "text-rose-300"}`}
+              >
+                {feedback}
+              </p>
+            ) : null}
           </form>
         </div>
       </div>
